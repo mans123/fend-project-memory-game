@@ -1,3 +1,4 @@
+ //1st Commit : Initial Commit
  // Create a list that holds all of your cards
 let cards = ["fa-diamond", "fa-diamond",
     "fa-paper-plane-o", "fa-paper-plane-o",
@@ -33,6 +34,7 @@ function shuffle(array) {
 
 //Global Varibles
 const deck = document.querySelector('.deck');
+let toggledCards = [];
 
 
 // Display the shuffled cards on the page
@@ -50,8 +52,47 @@ shuffleDeck();
 // Add Event Listener to card
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
-    if(clickTarget.classList.contains('card')) {
-        clickTarget.classList.toggle('open');
-        clickTarget.classList.toggle('show');
+    if(isClickValid(clickTarget)) {
+        toggleCard(clickTarget);
+        addToggleCard(clickTarget);
+        if(toggledCards.length === 2) {
+            checkForMatch(clickTarget);
+        }
     }
 });
+//3rd Commit : Add Event Listener to a card
+
+// Add open and show class names to cards function
+function toggleCard(clickTarget) {
+    clickTarget.classList.toggle('open');
+    clickTarget.classList.toggle('show');
+}
+
+// Storing toggle cards in an Array
+function addToggleCard(clickTarget) {
+    toggledCards.push(clickTarget);
+    console.log(toggledCards);
+}
+
+// Checking Two cards are Matching
+function checkForMatch() {
+    if (toggledCards[0].firstElementChild.className === toggledCards[1].firstElementChild.className) {
+        toggledCards[0].classList.toggle('match');
+        toggledCards[1].classList.toggle('match');
+        toggledCards = [];
+        // matched++;
+    } else {
+        setTimeout(() => {
+            toggleCard(toggledCards[0]);
+            toggleCard(toggledCards[1]);
+            toggledCards = [];
+        }, 1000);
+    }
+}
+
+// Checkin click is valid
+function isClickValid(clickTarget) {
+    return (
+        clickTarget.classList.contains('card') && !clickTarget.classList.contains('match') && toggledCards.length < 2 && !toggledCards.includes(clickTarget)
+    );
+}
