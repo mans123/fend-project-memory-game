@@ -36,6 +36,9 @@ function shuffle(array) {
 const deck = document.querySelector('.deck');
 let toggledCards = [];
 let moves = 0;
+let time = 0;
+let clockOff = true;
+let clockId;
 
 
 
@@ -57,6 +60,11 @@ deck.addEventListener('click', event => {
     const clickTarget = event.target;
     
     if(isClickValid(clickTarget)) {
+        if(clockOff) {
+            startClock();
+            clockOff = false;
+        }
+
         toggleCard(clickTarget);
         addToggleCard(clickTarget);
         
@@ -128,4 +136,32 @@ function hideStar() {
         }
     }
 }
-//5th Commit: Adding Moves and Score to the page
+//5th Commit: Add Moves and Score to the page
+
+
+// Start timer
+function startClock() {
+    clockId = setInterval(() => {
+        time++;
+        displayTime();
+    }, 1000);
+}
+
+//Add Clock to the page
+function displayTime() {
+    const clock = document.querySelector('.clock');
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    clock.innerHTML = time;
+    if (seconds < 10) {
+        clock.innerHTML = `${minutes}:0${seconds}`;
+    }else {
+        clock.innerHTML = `${minutes}:${seconds}`;
+    }
+}
+
+//Stop timer
+function stopClock() {
+    clearInterval(clockId);
+}
+// 6th Commit : Add timer to page
