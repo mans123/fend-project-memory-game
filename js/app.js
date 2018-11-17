@@ -35,6 +35,9 @@ function shuffle(array) {
 //Global Varibles
 const deck = document.querySelector('.deck');
 let toggledCards = [];
+let moves = 0;
+
+
 
 
 // Display the shuffled cards on the page
@@ -52,11 +55,15 @@ shuffleDeck();
 // Add Event Listener to card
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
+    
     if(isClickValid(clickTarget)) {
         toggleCard(clickTarget);
         addToggleCard(clickTarget);
+        
         if(toggledCards.length === 2) {
             checkForMatch(clickTarget);
+            addMove();
+            checkScore();
         }
     }
 });
@@ -71,7 +78,6 @@ function toggleCard(clickTarget) {
 // Storing toggle cards in an Array
 function addToggleCard(clickTarget) {
     toggledCards.push(clickTarget);
-    console.log(toggledCards);
 }
 
 // Checking Two cards are Matching
@@ -96,3 +102,30 @@ function isClickValid(clickTarget) {
         clickTarget.classList.contains('card') && !clickTarget.classList.contains('match') && toggledCards.length < 2 && !toggledCards.includes(clickTarget)
     );
 }
+//4th Commit : Add Match class name and checking two cards are matching
+
+// Add Moves to the Page
+function addMove() {
+    moves++;
+    const movesText = document.querySelector('.moves');
+    movesText.innerHTML = moves;
+}
+
+// Check Score for hiding a Star
+function checkScore() {
+    if(moves === 16 || moves === 24) {
+        hideStar();
+    }
+}
+
+// Hiding a star from page
+function hideStar() {
+    const starList = document.querySelectorAll('.stars li');
+    for (star of starList) {
+        if(star.style.display = 'none'){
+            star.style.display = 'none';
+            break;
+        }
+    }
+}
+//5th Commit: Adding Moves and Score to the page
