@@ -39,6 +39,7 @@ let moves = 0;
 let time = 0;
 let clockOff = true;
 let clockId;
+let matched = 0;
 
 
 
@@ -73,6 +74,10 @@ deck.addEventListener('click', event => {
             addMove();
             checkScore();
         }
+        const TOTAL_PARTS = 8;
+        if(matched === TOTAL_PARTS){
+            gameOver();
+        }
     }
 });
 //Commit 3: Add Event Listener to a card
@@ -94,7 +99,7 @@ function checkForMatch() {
         toggledCards[0].classList.toggle('match');
         toggledCards[1].classList.toggle('match');
         toggledCards = [];
-        // matched++;
+        matched++;
     } else {
         setTimeout(() => {
             toggleCard(toggledCards[0]);
@@ -171,11 +176,10 @@ function toggleModal () {
     const modal = document.querySelector('.modal_background');
     modal.classList.toggle('hide');
 }
-toggleModal();
 
 //  Display time, stars and moves on a Modal
 function writeModalStats() {
-    const timeStat = documnet.querySelector('.modal_time');
+    const timeStat = document.querySelector('.modal_time');
     const clockTime = document.querySelector('.clock').innerHTML;
     const movesStat = document.querySelector('.modal_moves');
     const starsStat = document.querySelector('.modal_stars');
@@ -198,3 +202,63 @@ function getStars () {
     return starCount;
 }
 //Commit 7: Add Modal to the Page 
+
+document.querySelector('.modal_cancel').addEventListener('click', toggleModal);
+
+document.querySelector('.modal_replay').addEventListener('click', replayGame);
+
+document.querySelector('.restart').addEventListener('click', resetGame);
+
+// Reset clock when restart or replay a game
+function resetClockAndTime () {
+    stopClock();
+    clockOff = true;
+    time = 0;
+    displayTime();
+}
+
+// Reset Moves when restart or replay a ame
+function resetMoves () {
+    moves = 0;
+    document.querySelector('.moves').innerHTML = moves;
+}
+
+// Reset Stars when restart or replay a game
+function resetStars () {
+    stars = 0;
+    const starList = document.querySelectorAll('.stars li');
+    for (star of starList) {
+        star.style.display = 'inline';
+    }
+}
+
+// Add functionality to Reset Button
+function resetGame () {
+    resetClockAndTime();
+    resetMoves();
+    resetStars();
+    shuffleDeck();
+    resetCards();
+}
+
+// When game over 
+function gameOver() {
+    stopClock();
+    writeModalStats();
+    toggleModal();
+}
+
+// replay game func
+function replayGame () {
+    resetGame();
+    toggleModal();
+}
+
+// Reset cards when ame over
+function resetCards () {
+    const cards = document.querySelectorAll('.deck li');
+    for (let card of cards) {
+        card.className = 'card';
+    }
+}
+// Commit 8: Add Game reset and Replay functionality
