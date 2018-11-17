@@ -1,14 +1,17 @@
  // Commit 1: Initial Commit
  // Create a list that holds all of your cards
-let cards = ["fa-diamond", "fa-diamond",
-    "fa-paper-plane-o", "fa-paper-plane-o",
-    "fa-anchor", "fa-anchor",
-    "fa-cube", "fa-cube",
-    "fa-bolt", "fa-bolt",
-    "fa-leaf", "fa-leaf",
-    "fa-bicycle", "fa-bicycle",
-    "fa-bomb", "fa-bomb"
+
+let symbols =  [
+    "fa-diamond", 
+    "fa-paper-plane-o", 
+    "fa-anchor", 
+    "fa-cube", 
+    "fa-bolt", 
+    "fa-leaf", 
+    "fa-bicycle", 
+    "fa-bomb"
 ];
+let cards = [...symbols, ...symbols];
 
 // Generating HTML template literal for Card 
 function generateCard(card) {
@@ -72,7 +75,8 @@ deck.addEventListener('click', event => {
         if(toggledCards.length === 2) {
             checkForMatch(clickTarget);
             addMove();
-            checkScore();
+            // checkScore();
+            hideStar();
         }
         const TOTAL_PARTS = 8;
         if(matched === TOTAL_PARTS){
@@ -124,21 +128,15 @@ function addMove() {
     movesText.innerHTML = moves;
 }
 
-// Check Score for hiding a Star
-function checkScore() {
-    if(moves === 16 || moves === 24) {
-        hideStar();
-    }
-}
-
 // Hiding a star from page
 function hideStar() {
     const starList = document.querySelectorAll('.stars li');
-    for (star of starList) {
-        if(star.style.display = 'none'){
-            star.style.display = 'none';
-            break;
-        }
+
+    if(moves === 16){
+        starList[2].style.display = 'none';
+    }else if(moves === 24) {
+        starList[1].style.display = 'none';
+        starList[2].style.display = 'none';
     }
 }
 // Commit 5: Add Moves and Score to the page
@@ -239,6 +237,8 @@ function resetGame () {
     resetStars();
     shuffleDeck();
     resetCards();
+    matched = 0;
+    toggledCards = [];
 }
 
 // When game over 
@@ -262,3 +262,4 @@ function resetCards () {
     }
 }
 // Commit 8: Add Game reset and Replay functionality
+// Commit 9: Implemented All Suggestions given by Reviewer

@@ -128,7 +128,6 @@ h1 {
     left: 50%; 
     transform: translate(-50%, -50%);
     background: #ffffff;
-    /* background: #FA8585; */
     z-index: 1;
     border-radius: 5px;
     border: 1px solid gray;;
