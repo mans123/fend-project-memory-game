@@ -1,7 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
-
+ // Create a list that holds all of your cards
 let cards = ["fa-diamond", "fa-diamond",
     "fa-paper-plane-o", "fa-paper-plane-o",
     "fa-anchor", "fa-anchor",
@@ -12,6 +9,7 @@ let cards = ["fa-diamond", "fa-diamond",
     "fa-bomb", "fa-bomb"
 ];
 
+// Generating HTML template literal for Card 
 function generateCard(card) {
     return `<li class="card"><i class="fa ${card}"></i></li>`
 };
@@ -33,10 +31,13 @@ function shuffle(array) {
 }
 
 
+//Global Varibles
+const deck = document.querySelector('.deck');
+
+
 // Display the shuffled cards on the page
 function shuffleDeck() {
-    var deck = document.querySelector('.deck');
-    var cardHTML = shuffle(cards.map(function (card) {
+    const cardHTML = shuffle(cards.map(function (card) {
         return generateCard(card);
     }));
 
@@ -44,4 +45,13 @@ function shuffleDeck() {
 };
 
 shuffleDeck();
+// 2nd Commit : Display shuffled cards on the Page
 
+// Add Event Listener to card
+deck.addEventListener('click', event => {
+    const clickTarget = event.target;
+    if(clickTarget.classList.contains('card')) {
+        clickTarget.classList.toggle('open');
+        clickTarget.classList.toggle('show');
+    }
+});
