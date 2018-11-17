@@ -1,4 +1,4 @@
- //1st Commit : Initial Commit
+ // Commit 1: Initial Commit
  // Create a list that holds all of your cards
 let cards = ["fa-diamond", "fa-diamond",
     "fa-paper-plane-o", "fa-paper-plane-o",
@@ -53,7 +53,7 @@ function shuffleDeck() {
 };
 
 shuffleDeck();
-// 2nd Commit : Display shuffled cards on the Page
+// Commit 2: Display shuffled cards on the Page
 
 // Add Event Listener to card
 deck.addEventListener('click', event => {
@@ -75,7 +75,7 @@ deck.addEventListener('click', event => {
         }
     }
 });
-//3rd Commit : Add Event Listener to a card
+//Commit 3: Add Event Listener to a card
 
 // Add open and show class names to cards function
 function toggleCard(clickTarget) {
@@ -110,7 +110,7 @@ function isClickValid(clickTarget) {
         clickTarget.classList.contains('card') && !clickTarget.classList.contains('match') && toggledCards.length < 2 && !toggledCards.includes(clickTarget)
     );
 }
-//4th Commit : Add Match class name and checking two cards are matching
+// Commit 4: Add Match class name and checking two cards are matching
 
 // Add Moves to the Page
 function addMove() {
@@ -136,7 +136,7 @@ function hideStar() {
         }
     }
 }
-//5th Commit: Add Moves and Score to the page
+// Commit 5: Add Moves and Score to the page
 
 
 // Start timer
@@ -164,4 +164,37 @@ function displayTime() {
 function stopClock() {
     clearInterval(clockId);
 }
-// 6th Commit : Add timer to page
+// Commit 6: Add timer to page
+
+// hide or unhide a Modal
+function toggleModal () {
+    const modal = document.querySelector('.modal_background');
+    modal.classList.toggle('hide');
+}
+toggleModal();
+
+//  Display time, stars and moves on a Modal
+function writeModalStats() {
+    const timeStat = documnet.querySelector('.modal_time');
+    const clockTime = document.querySelector('.clock').innerHTML;
+    const movesStat = document.querySelector('.modal_moves');
+    const starsStat = document.querySelector('.modal_stars');
+    const stars = getStars();
+
+    timeStat.innerHTML = `Time = ${clockTime}`;
+    movesStat.innerHTML = `Moves = ${moves}`;
+    starsStat.innerHTML = `Stars = ${stars}`;
+}
+
+// Get star on Modal
+function getStars () {
+    let stars = document.querySelectorAll('.stars li');
+    let starCount = 0;
+    for(star of stars) {
+        if(star.style.display !== 'none'){
+            starCount++;
+        }
+    }
+    return starCount;
+}
+//Commit 7: Add Modal to the Page 
